@@ -234,4 +234,15 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('selected');
         });
     });
+
+    // ========================================
+    // Footer Links Sound Effect
+    // ========================================
+    const fahSound = document.getElementById('fah-sound');
+    document.querySelectorAll('.footer-links a').forEach((link) => {
+        link.addEventListener('click', () => {
+            fahSound.currentTime = 0;
+            fahSound.play();
+        });
+    });
 });

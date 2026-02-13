@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveCalc - Love Compatibility Calculator</title>
+  <meta name="description"
+    content="Find out how compatible you and your partner really are with our scientifically-backed love calculator.">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 88C25 65 5 50 5 30 5 15 15 5 30 5c10 0 18 7 20 13C52 12 60 5 70 5c15 0 25 10 25 25 0 20-20 35-45 58z' fill='%23FF6B8A'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-content">
+      <span class="logo"><span class="logo-heart">&#x2764;&#xFE0F;</span> LoveCalc</span>
+    </div>
+  </nav>
+
+  <!-- Calculator Section -->
+  <section id="calculator-section" class="section fullscreen">
+    <div class="calc-container">
+      <div class="calc-header">
+        <h1>Love Calculator</h1>
+        <p class="subtitle">Discover your true compatibility</p>
+      </div>
+      <div class="calc-card">
+        <div class="input-row">
+          <div class="input-group">
+            <label for="girlName">Girl Name</label>
+            <input type="text" id="girlName" placeholder="Type her name..." autocomplete="off" autocorrect="off"
+              autocapitalize="off" spellcheck="false" data-lpignore="true">
+          </div>
+          <div class="ampersand">&amp;</div>
+          <div class="input-group">
+            <label for="boyName">Boy Name</label>
+            <input type="text" id="boyName" placeholder="Type his name..." autocomplete="off" autocorrect="off"
+              autocapitalize="off" spellcheck="false" data-lpignore="true">
+          </div>
+        </div>
+        <div class="btn-wrapper" id="btn-wrapper">
+          <button id="calculateBtn" disabled>Calculate Love</button>
+        </div>
+      </div>
+      <p class="trust-line">Trusted by 10 million+ couples worldwide</p>
+    </div>
+  </section>
+
+  <!-- Loading Section -->
+  <section id="loading-section" class="section fullscreen" style="display:none;">
+    <div class="loading-container">
+      <div class="pulse-heart">&#x2764;&#xFE0F;</div>
+      <p>Analysing your compatibility...</p>
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <section id="results-section" class="section fullscreen" style="display:none;">
+    <div class="floating-hearts" id="hearts-container"></div>
+    <div class="results-container">
+      <div class="result-reveal names">
+        <span class="name">Lio</span>
+        <span class="heart-between">&#x2764;&#xFE0F;</span>
+        <span class="name">Shann</span>
+      </div>
+      <div class="percentage-ring-wrapper">
+        <svg class="percentage-ring" viewBox="0 0 120 120">
+          <circle class="ring-track" cx="60" cy="60" r="52" fill="none" stroke-width="5" />
+          <circle class="ring-fill" cx="60" cy="60" r="52" fill="none" stroke-width="5" id="ring-fill"
+            stroke-linecap="round" transform="rotate(-90 60 60)" />
+        </svg>
+        <div class="percentage-text">
+          <span id="percentage">0</span><span class="percent-sign">%</span>
+        </div>
+      </div>
+      <p class="result-reveal result-message">A perfect match.</p>
+      <div class="result-reveal scroll-hint" id="scroll-hint">
+        <p>Scroll down to read more</p>
+        <div class="scroll-arrow">&#8595;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section id="timeline-section" style="display:none;">
+    <div class="timeline-container">
+      <div class="timeline">
+        <!-- Reading -->
+        <div class="timeline-item">
+          <div class="timeline-card">
+            <h3>&#x1F52E; Compatibility Report</h3>
+            <p class="reading-text">
+              The results confirm what everyone already knows: you two are a
+              perfect match. Your strongest traits as a couple are the
+              way you make each other feel safe, loved, and supported, while
+              still keeping things fun and effortless. You're the kind of couple that
+              can go from gym to cuddles, from brain rot to deep talks, and it still
+              feels natural. You bring out the best in each other, and somehow turn even
+              ordinary days into something comforting and special. You never stop learning
+              about each other and yourselves, constantly growing the relationship together.
+              The connection here is the kind that feels steady and exciting all at once, like
+              best friends and soulmates in one package. Honestly, it's unfair to
+              other couples.
+            </p>
+            <p class="reading-text" style="margin-top: 1rem;">
+              Below are some recommended date ideas based on your compatibility results.
+            </p>
+          </div>
+        </div>
+
+        <!-- Lunch -->
+        <div class="timeline-item">
+          <div class="timeline-card card-charcuterie">
+            <span class="time-label">Lunch</span>
+            <h3>Charcuterie Board</h3>
+            <p class="card-subtitle">A handpicked spread for two</p>
+            <div class="ingredients">
+              <span class="ingredient">&#x1F34D; Pineapple Cheese</span>
+              <span class="ingredient">&#x1F969; Prosciutto</span>
+              <span class="ingredient">&#x1F358; Crackers</span>
+              <span class="ingredient">&#x1F347; Grapes</span>
+              <span class="ingredient">&#x1F350; Pear Jam</span>
+              <span class="ingredient">&#x1F376; Makgeolli</span>
+            </div>
+            <div class="choice-section">
+              <p class="choice-prompt">How would you like it prepared?</p>
+              <div class="choice-buttons">
+                <button class="choice-btn" data-choice="couples">
+                  <span class="choice-emoji">&#x1F491;</span>
+                  <span class="choice-title">Couples Activity</span>
+                  <span class="choice-desc">We set it up together</span>
+                </button>
+                <div class="choice-divider">vs</div>
+                <button class="choice-btn" data-choice="omakase">
+                  <span class="choice-emoji">&#x1F468;&#x200D;&#x1F373;</span>
+                  <span class="choice-title">Omakase</span>
+                  <span class="choice-desc">Prepared with love by Lio</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Afternoon -->
+        <div class="timeline-item">
+
+          <div class="timeline-card card-museum">
+            <span class="time-label">Afternoon</span>
+            <h3>&#x1F3A8; ArtScience Museum</h3>
+            <p class="card-subtitle">Marina Bay Sands, Singapore</p>
+            <div class="exhibits">
+              <div class="exhibit exhibit-future">
+                <h4>&#x1F30C; Future World</h4>
+                <p>Where Art Meets Science</p>
+              </div>
+              <div class="exhibit exhibit-another">
+                <h4>&#x1F30D; Another World is Possible</h4>
+                <p>Exploring new perspectives together</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dinner -->
+        <div class="timeline-item">
+
+          <div class="timeline-card card-dinner">
+            <span class="time-label">Dinner</span>
+            <h3>&#x1F37D;&#xFE0F; Rise Restaurant</h3>
+            <p class="card-subtitle">Marina Bay Sands, Singapore</p>
+            <p class="dinner-desc">A buffet dinner to end our perfect day.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valentine Message -->
+  <div id="valentine-message" class="valentine-message" style="display:none;">
+    <p>Happy Valentine's Day, Shann &#x2764;&#xFE0F;</p>
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer" style="display:none;">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a>About Us</a>
+        <a>Methodology</a>
+        <a>Privacy Policy</a>
+        <a>Terms of Service</a>
+        <a>Careers</a>
+        <a>Contact</a>
+      </div>
+      <p class="footer-tagline">LoveCalc uses proprietary AstroSync&trade; technology to deliver scientifically accurate
+        compatibility readings.</p>
+      <p class="footer-copy">&copy; 2026 LoveCalc Inc. All rights reserved. Not responsible for any marriages,
+        proposals, or excessive hand-holding resulting from our calculations.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

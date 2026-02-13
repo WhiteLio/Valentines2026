@@ -1,0 +1,928 @@
+/* ============================================
+   Reset & Variables
+   ============================================ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0C0C10;
+    --bg-alt: #101016;
+    --surface: #16161E;
+    --surface-hover: #1C1C26;
+    --surface-border: #28283A;
+    --primary: #E8A0B8;
+    --primary-hover: #F0B4C8;
+    --primary-muted: rgba(232, 160, 184, 0.12);
+    --primary-glow: rgba(232, 160, 184, 0.06);
+    --heart: #FF6B8A;
+    --heart-glow: rgba(255, 107, 138, 0.15);
+    --text: #EDEBF0;
+    --text-secondary: #8A889A;
+    --text-muted: #56546A;
+    --shadow: rgba(0, 0, 0, 0.4);
+    --shadow-hover: rgba(0, 0, 0, 0.55);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    background: rgba(12, 12, 16, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+    transition: opacity 0.4s ease;
+}
+
+.navbar.nav-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+}
+
+/* ============================================
+   Shared
+   ============================================ */
+.fullscreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================
+   Calculator Section
+   ============================================ */
+#calculator-section {
+    background: radial-gradient(ellipse at 50% 0%, rgba(232, 160, 184, 0.06) 0%, var(--bg) 70%);
+    padding-top: 5rem;
+    transition: opacity 0.5s ease;
+}
+
+#calculator-section.fade-out {
+    opacity: 0;
+}
+
+.calc-container {
+    text-align: center;
+    padding: 2rem;
+    max-width: 580px;
+    width: 100%;
+}
+
+.calc-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.calc-header .subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+}
+
+.calc-card {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 40px var(--shadow);
+    border: 1px solid var(--surface-border);
+}
+
+.input-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+.input-group {
+    flex: 1;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: left;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1.5px solid var(--surface-border);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-muted);
+}
+
+.input-group input::placeholder {
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.ampersand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--primary);
+    font-style: italic;
+    padding-top: 1.75rem;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Button Wrapper (expand + fade in)
+   ============================================ */
+.btn-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease 0.12s;
+}
+
+.btn-wrapper.visible {
+    max-height: 100px;
+    opacity: 1;
+}
+
+#calculateBtn {
+    margin-top: 1.75rem;
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: var(--bg);
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    letter-spacing: 0.01em;
+}
+
+#calculateBtn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+#calculateBtn:active {
+    transform: translateY(0);
+}
+
+.trust-line {
+    margin-top: 1.75rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+}
+
+/* ============================================
+   Loading Section
+   ============================================ */
+#loading-section {
+    background: var(--bg);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+#loading-section.show {
+    opacity: 1;
+}
+
+.loading-container {
+    text-align: center;
+}
+
+.pulse-heart {
+    font-size: 4rem;
+    animation: pulse 0.9s ease-in-out infinite;
+    display: inline-block;
+    filter: drop-shadow(0 0 24px var(--heart-glow));
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+}
+
+.loading-container p {
+    margin-top: 1.5rem;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+/* ============================================
+   Results Section
+   ============================================ */
+#results-section {
+    background: radial-gradient(ellipse at 50% 40%, rgba(255, 107, 138, 0.05) 0%, var(--bg) 70%);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+#results-section.show {
+    opacity: 1;
+}
+
+.results-container {
+    text-align: center;
+    padding: 2rem;
+    z-index: 1;
+    position: relative;
+}
+
+/* ============================================
+   Result Reveal (staggered after 100%)
+   ============================================ */
+.result-reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.result-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   Names
+   ============================================ */
+.names {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.names .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.75rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.names .heart-between {
+    font-size: 1.8rem;
+    animation: pulse 2s ease-in-out infinite;
+    display: inline-block;
+    filter: drop-shadow(0 0 10px var(--heart-glow));
+}
+
+/* ============================================
+   SVG Progress Ring
+   ============================================ */
+.percentage-ring-wrapper {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 2rem;
+}
+
+.percentage-ring {
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+}
+
+.ring-track {
+    stroke: var(--surface-border);
+}
+
+.ring-fill {
+    stroke: var(--heart);
+    stroke-dasharray: 326.726;
+    stroke-dashoffset: 326.726;
+    filter: drop-shadow(0 0 6px var(--heart-glow));
+}
+
+.percentage-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-variant-numeric: tabular-nums;
+}
+
+#percentage {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--heart);
+}
+
+.percent-sign {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--heart);
+}
+
+.result-message {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 3.5rem;
+}
+
+.scroll-hint {
+    cursor: pointer;
+}
+
+.scroll-hint.revealed {
+    animation: bounce 2.5s ease-in-out infinite;
+}
+
+.scroll-hint p {
+    font-size: 0.95rem;
+    color: var(--primary);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+}
+
+.scroll-arrow {
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+/* ============================================
+   Floating Hearts
+   ============================================ */
+.floating-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -20px;
+    opacity: 0;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 0.14;
+    }
+
+    88% {
+        opacity: 0.14;
+    }
+
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   Timeline Section
+   ============================================ */
+#timeline-section {
+    padding: 6rem 2rem 4rem;
+    background: var(--bg);
+}
+
+.timeline-container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.timeline-item {
+    position: relative;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   Timeline Cards (with bg image support)
+   ============================================ */
+.timeline-card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 24px var(--shadow);
+    border: 1px solid var(--surface-border);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.timeline-card:hover {
+    border-color: rgba(232, 160, 184, 0.28);
+    box-shadow: 0 10px 36px var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+/*  Background images for timeline cards.
+    To add images, create an "images" folder and add:
+      - charcuterie.jpg
+      - museum.jpg
+      - dinner.jpg
+    The images will appear as subtle faded backgrounds on the right side. */
+.timeline-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.card-charcuterie::after {
+    background-image: url('Pictures/chacuterie.jpg');
+}
+
+.card-museum::after {
+    background-image: url('Pictures/art sci museum.jpg');
+}
+
+.card-dinner::after {
+    background-image: url('Pictures/rise.jpg');
+}
+
+.time-label {
+    display: inline-block;
+    background: var(--primary-muted);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(232, 160, 184, 0.15);
+}
+
+.timeline-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+}
+
+.card-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+}
+
+/* ============================================
+   Ingredients
+   ============================================ */
+.ingredients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+}
+
+.ingredient {
+    background: #1E1A22;
+    color: var(--primary);
+    padding: 0.375rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 400;
+    border: 1px solid #2E2836;
+}
+
+/* ============================================
+   Choice Buttons
+   ============================================ */
+.choice-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--surface-border);
+}
+
+.choice-prompt {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.choice-buttons {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+}
+
+.choice-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.85rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-style: italic;
+    flex-shrink: 0;
+}
+
+.choice-btn {
+    flex: 1;
+    background: #1E1A22;
+    border: 1.5px solid #2E2836;
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+}
+
+.choice-btn:hover {
+    border-color: var(--primary);
+    background: #261E2A;
+    transform: translateY(-2px);
+}
+
+.choice-emoji {
+    display: block;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.choice-btn .choice-title {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+}
+
+.choice-btn .choice-desc {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.choice-btn.selected {
+    border-color: var(--primary);
+    background: #2A1E28;
+    box-shadow: 0 0 16px var(--primary-muted);
+}
+
+.choice-btn.selected::after {
+    content: '\2713';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* ============================================
+   Exhibits
+   ============================================ */
+.exhibits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.exhibit {
+    background: #1E1A22;
+    border: 1px solid #2E2836;
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.exhibit::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 55%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.exhibit-future::after {
+    background-image: url('Pictures/teamlabs future world.jpg');
+}
+
+.exhibit-another::after {
+    background-image: url('Pictures/another world is possible.webp');
+}
+
+.exhibit h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+}
+
+.exhibit p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+/* ============================================
+   Dinner
+   ============================================ */
+.dinner-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-top: 0.5rem;
+}
+
+/* ============================================
+   Reading Card
+   ============================================ */
+.reading-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    font-weight: 300;
+}
+
+/* ============================================
+   Valentine Message
+   ============================================ */
+.valentine-message {
+    text-align: center;
+    padding: 3rem 2rem 1.5rem;
+    background: var(--bg);
+}
+
+.valentine-message p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 400;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+footer {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    background: var(--bg);
+    border-top: 1px solid var(--surface-border);
+}
+
+.footer-content {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.footer-links a {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+    cursor: default;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.footer-tagline {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+}
+
+.footer-copy {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* ============================================
+   Mobile Responsive
+   ============================================ */
+@media (max-width: 600px) {
+    .calc-header h1 {
+        font-size: 2.25rem;
+    }
+
+    .calc-header .subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .calc-card {
+        padding: 1.75rem 1.5rem;
+    }
+
+    .input-row {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .ampersand {
+        padding-top: 0;
+        font-size: 1.25rem;
+    }
+
+    .names .name {
+        font-size: 2rem;
+    }
+
+    .names .heart-between {
+        font-size: 1.3rem;
+    }
+
+    .percentage-ring-wrapper {
+        width: 150px;
+        height: 150px;
+    }
+
+    #percentage {
+        font-size: 1.85rem;
+    }
+
+    .percent-sign {
+        font-size: 1.85rem;
+    }
+
+    .choice-buttons {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .choice-divider {
+        padding: 0.5rem 0;
+    }
+
+    .exhibits {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-card {
+        padding: 1.5rem;
+    }
+
+    .timeline-card h3 {
+        font-size: 1.3rem;
+    }
+
+}
+
+@media (max-width: 380px) {
+    .calc-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .calc-card {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .names .name {
+        font-size: 1.7rem;
+    }
+
+    .names {
+        gap: 0.6rem;
+    }
+}
